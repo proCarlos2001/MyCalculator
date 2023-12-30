@@ -1,5 +1,6 @@
 package com.example.mycalculator
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,27 +9,25 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import android.os.Vibrator
-import android.telephony.PhoneNumberUtils.formatNumber
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import java.text.DecimalFormat
 import android.util.Log
-import java.text.DecimalFormatSymbols
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private var canAddOperation = false
     private var canAddDecimal = true
-    lateinit var vibrator: Vibrator
+    private lateinit var vibrator: Vibrator
 
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        vibrator = getSystemService(Vibrator::class.java)
 
         val switch = findViewById<Switch>(R.id.swtich)
 
@@ -224,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         val decimalFormat = DecimalFormat("#,###.#########")
         return decimalFormat.format(result)
     }
-    fun calculateAndFormatResult(): String {
+    private fun calculateAndFormatResult(): String {
         val result = calculateResults()
         return formatResult(result.toFloat())
     }
